@@ -19,6 +19,7 @@
 #ifndef HEADER_XBOXDRV_UI_EVENT_SEQUENCE_HPP
 #define HEADER_XBOXDRV_UI_EVENT_SEQUENCE_HPP
 
+#include <string>
 #include <vector>
 
 #include "ui_event.hpp"
@@ -31,21 +32,20 @@ class UInput;
 
     FIXME: class name is kind of wrong
  */
-class UIEventSequence
-{
-public:
+class UIEventSequence {
+ public:
   /**
       "KEY_LEFTSHIFT+KEY_B"
   */
   static UIEventSequence from_string(const std::string& value);
 
-private:
+ private:
   typedef std::vector<UIEvent> UIEvents;
   typedef std::vector<UIEventEmitterPtr> UIEventEmitters;
   UIEvents m_sequence;
   UIEventEmitters m_emitters;
 
-public:
+ public:
   UIEventSequence();
   UIEventSequence(const UIEvents& sequence);
   UIEventSequence(const UIEvent& event);

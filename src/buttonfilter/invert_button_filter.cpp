@@ -18,16 +18,10 @@
 
 #include "invert_button_filter.hpp"
 
-bool
-InvertButtonFilter::filter(bool value)
-{
-  return !value;
-}
+#include <string>
 
-std::string
-InvertButtonFilter::str() const
-{
-  return "invert";
-}
+bool InvertButtonFilter::filter(bool value) { return !value; }
+
+std::string InvertButtonFilter::str() const { return "invert"; }
 
 /* EOF */

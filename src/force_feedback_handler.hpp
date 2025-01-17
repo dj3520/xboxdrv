@@ -20,11 +20,14 @@
 #define HEADER_FF_HANDLER_HPP
 
 #include <linux/input.h>
+
+#include <functional>
 #include <map>
-
-class ForceFeedbackEffect
-{
-public:
+
+class Controller;
+
+class ForceFeedbackEffect {
+ public:
   ForceFeedbackEffect();
   ForceFeedbackEffect(const struct ff_effect& e);
 
@@ -43,22 +46,15 @@ public:
   int end_weak_magnitude;
 
   // Envelope
-  struct Envelope
-  {
+  struct Envelope {
     Envelope()
-      : attack_length(0),
-        attack_level(0),
-        fade_length(0),
-        fade_level(0)
-    {}
+        : attack_length(0), attack_level(0), fade_length(0), fade_level(0) {}
 
     Envelope(const struct ff_envelope& e)
-      : attack_length(e.attack_length),
-        attack_level(e.attack_level),
-        fade_length(e.fade_length),
-        fade_level(e.fade_level)
-    {
-    }
+        : attack_length(e.attack_length),
+          attack_level(e.attack_level),
+          fade_length(e.fade_length),
+          fade_level(e.fade_level) {}
 
     int attack_length;
     int attack_level;
@@ -68,22 +64,21 @@ public:
   } envelope;
 
   bool playing;
-  int  count;
-  int  weak_magnitude;
-  int  strong_magnitude;
+  int count;
+  int weak_magnitude;
+  int strong_magnitude;
 
-  int  get_weak_magnitude()   const { return weak_magnitude; }
-  int  get_strong_magnitude() const { return strong_magnitude; }
+  int get_weak_magnitude() const { return weak_magnitude; }
+  int get_strong_magnitude() const { return strong_magnitude; }
 
   void update(int msec_delta);
   void play();
   void stop();
 };
-
+
 /** */
-class ForceFeedbackHandler
-{
-private:
+class ForceFeedbackHandler {
+ private:
   int gain;
   int max_effects;
   typedef std::map<int, ForceFeedbackEffect> Effects;
@@ -91,9 +86,10 @@ private:
 
   int weak_magnitude;
   int strong_magnitude;
+  Controller* m_controller;
 
-public:
-  ForceFeedbackHandler();
+ public:
+  ForceFeedbackHandler(Controller* controller);
   ~ForceFeedbackHandler();
 
   int get_max_effects();
@@ -111,7 +107,7 @@ public:
   int get_weak_magnitude() const;
   int get_strong_magnitude() const;
 };
-
+
 #endif
 
 /* EOF */

@@ -19,7 +19,8 @@
 #ifndef HEADER_XBOXDRV_CONTROLLER_CONFIG_SET_HPP
 #define HEADER_XBOXDRV_CONTROLLER_CONFIG_SET_HPP
 
-#include <boost/function.hpp>
+#include <functional>
+#include <memory>
 
 #include "controller_config.hpp"
 #include "options.hpp"
@@ -27,32 +28,36 @@
 class Options;
 class UInput;
 class ControllerSlotConfig;
+class Controller;
 
-typedef boost::shared_ptr<ControllerSlotConfig> ControllerSlotConfigPtr;
+typedef std::shared_ptr<ControllerSlotConfig> ControllerSlotConfigPtr;
 
-class ControllerSlotConfig
-{
-public:
-  /** Creates a ControllerSlotConfig from the Options object and connects it to UInput */
-  static ControllerSlotConfigPtr create(UInput& uinput, int slot, bool extra_devices,
-                                       const ControllerSlotOptions& opts);
+class ControllerSlotConfig {
+ public:
+  /** Creates a ControllerSlotConfig from the Options object and connects it to
+   * UInput */
+  static ControllerSlotConfigPtr create(UInput& uinput, int slot,
+                                        bool extra_devices,
+                                        const ControllerSlotOptions& opts,
+                                        Controller* controller);
 
-private:
-  static void create_modifier(const ControllerOptions& options, std::vector<ModifierPtr>* modifier);
+ private:
+  static void create_modifier(const ControllerOptions& options,
+                              std::vector<ModifierPtr>* modifier);
 
-private:
+ private:
   std::vector<ControllerConfigPtr> m_config;
   int m_current_config;
-  boost::function<void (uint8_t, uint8_t)> m_rumble_callback;
+  Controller* m_controller;
 
-public:
+ public:
   ControllerSlotConfig();
 
   void add_config(ControllerConfigPtr config);
 
   void next_config();
   void prev_config();
-  int  config_count() const;
+  int config_count() const;
   void set_current_config(int num);
   int get_current_config() const { return m_current_config; }
 
@@ -61,10 +66,7 @@ public:
 
   bool empty() const { return m_config.empty(); }
 
-  void set_rumble(uint8_t strong, uint8_t weak);
-  void set_ff_callback(const boost::function<void (uint8_t, uint8_t)>& callback);
-
-private:
+ private:
   ControllerSlotConfig(const ControllerSlotConfig&);
   ControllerSlotConfig& operator=(const ControllerSlotConfig&);
 };

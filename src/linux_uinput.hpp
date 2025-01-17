@@ -19,20 +19,27 @@
 #ifndef HEADER_LINUX_UINPUT_HPP
 #define HEADER_LINUX_UINPUT_HPP
 
-#include <boost/function.hpp>
-#include <linux/uinput.h>
 #include <glib.h>
-#include <stdint.h>
-
+#include <linux/uinput.h>
+
+#include <cstdint>
+#include <functional>
+#include <string>
+
 class ForceFeedbackHandler;
+class Controller;
 
-class LinuxUinput
-{
-public:
-  enum DeviceType { kGenericDevice, kKeyboardDevice, kMouseDevice, kJoystickDevice };
+class LinuxUinput {
+ public:
+  enum DeviceType {
+    kGenericDevice,
+    kKeyboardDevice,
+    kMouseDevice,
+    kJoystickDevice
+  };
 
-private:
-  DeviceType  m_device_type;
+ private:
+  DeviceType m_device_type;
   std::string name;
   struct input_id usbid;
 
@@ -47,7 +54,6 @@ private:
   bool rel_bit;
   bool abs_bit;
   bool led_bit;
-  bool ff_bit;
 
   bool abs_lst[ABS_CNT];
   bool rel_lst[REL_CNT];
@@ -55,11 +61,12 @@ private:
   bool ff_lst[FF_CNT];
 
   ForceFeedbackHandler* m_ff_handler;
-  boost::function<void (uint8_t, uint8_t)> m_ff_callback;
+  Controller* m_controller;
 
   bool needs_sync;
+  bool m_force_feedback_enabled;
 
-public:
+ public:
   LinuxUinput(DeviceType device_type, const std::string& name,
               const struct input_id& usbid_);
   ~LinuxUinput();
@@ -76,7 +83,9 @@ public:
 
   void add_ff(uint16_t code);
 
-  void set_ff_callback(const boost::function<void (uint8_t, uint8_t)>& callback);
+  void set_controller(Controller* controller);
+  void enable_force_feedback();
+  void set_ff_gain(int gain);
 
   /** Finalized the device creation */
   void finish();
@@ -89,21 +98,18 @@ public:
 
   void update(int msec_delta);
 
-private:
-  gboolean on_read_data(GIOChannel* source,
-                        GIOCondition condition);
-  static gboolean on_read_data_wrap(GIOChannel* source,
-                                    GIOCondition condition,
-                                    gpointer userdata)
-  {
+ private:
+  gboolean on_read_data(GIOChannel* source, GIOCondition condition);
+  static gboolean on_read_data_wrap(GIOChannel* source, GIOCondition condition,
+                                    gpointer userdata) {
     return static_cast<LinuxUinput*>(userdata)->on_read_data(source, condition);
   }
 
-private:
-  LinuxUinput (const LinuxUinput&);
-  LinuxUinput& operator= (const LinuxUinput&);
+ private:
+  LinuxUinput(const LinuxUinput&);
+  LinuxUinput& operator=(const LinuxUinput&);
 };
-
+
 #endif
 
 /* EOF */

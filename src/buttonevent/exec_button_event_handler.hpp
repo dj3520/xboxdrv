@@ -19,14 +19,15 @@
 #ifndef HEADER_XBOXDRV_BUTTONEVENT_EXEC_BUTTON_EVENT_HANDLER_HPP
 #define HEADER_XBOXDRV_BUTTONEVENT_EXEC_BUTTON_EVENT_HANDLER_HPP
 
+#include <string>
+
 #include "button_event.hpp"
 
-class ExecButtonEventHandler : public ButtonEventHandler
-{
-public:
+class ExecButtonEventHandler : public ButtonEventHandler {
+ public:
   static ExecButtonEventHandler* from_string(const std::string& str);
 
-public:
+ public:
   ExecButtonEventHandler(const std::vector<std::string>& args);
 
   void init(UInput& uinput, int slot, bool extra_devices);
@@ -35,7 +36,7 @@ public:
 
   std::string str() const;
 
-private:
+ private:
   std::vector<std::string> m_args;
 };
 

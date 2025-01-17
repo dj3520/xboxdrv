@@ -19,18 +19,19 @@
 #ifndef HEADER_XBOXDRV_AXISEVENT_ABS_AXIS_EVENT_HANDLER_HPP
 #define HEADER_XBOXDRV_AXISEVENT_ABS_AXIS_EVENT_HANDLER_HPP
 
-#include "axis_event.hpp"
+#include <string>
 
+#include "axis_event.hpp"
 #include "ui_event_emitter.hpp"
 
-class AbsAxisEventHandler : public AxisEventHandler
-{
-public:
+class AbsAxisEventHandler : public AxisEventHandler {
+ public:
   static AbsAxisEventHandler* from_string(const std::string& str);
 
-public:
+ public:
   AbsAxisEventHandler();
-  AbsAxisEventHandler(const UIEvent& code, int min, int max, int fuzz, int flat);
+  AbsAxisEventHandler(const UIEvent& code, int min, int max, int fuzz,
+                      int flat);
 
   void init(UInput& uinput, int slot, bool extra_devices);
   void send(UInput& uinput, int value);
@@ -38,7 +39,7 @@ public:
 
   std::string str() const;
 
-private:
+ private:
   UIEvent m_code;
   int m_fuzz;
   int m_flat;

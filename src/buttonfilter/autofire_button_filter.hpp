@@ -19,21 +19,22 @@
 #ifndef HEADER_XBOXDRV_BUTTONFILTER_AUTOFIRE_BUTTON_FILTER_HPP
 #define HEADER_XBOXDRV_BUTTONFILTER_AUTOFIRE_BUTTON_FILTER_HPP
 
+#include <string>
+
 #include "button_filter.hpp"
 
-class AutofireButtonFilter : public ButtonFilter
-{
-public:
+class AutofireButtonFilter : public ButtonFilter {
+ public:
   static AutofireButtonFilter* from_string(const std::string& str);
 
-public:
+ public:
   AutofireButtonFilter(int rate, int delay);
 
   void update(int msec_delta);
   bool filter(bool value);
   std::string str() const;
 
-private:
+ private:
   bool m_state;
   bool m_autofire;
 

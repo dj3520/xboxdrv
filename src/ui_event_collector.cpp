@@ -18,25 +18,17 @@
 
 #include "ui_event_collector.hpp"
 
-#include <assert.h>
+#include <cassert>
 
 #include "log.hpp"
 #include "uinput.hpp"
 
-UIEventCollector::UIEventCollector(UInput& uinput,
-                               uint32_t device_id,
-                               int type,
-                               int code) :
-  m_uinput(uinput),
-  m_device_id(device_id),
-  m_type(type),
-  m_code(code)
-{
+UIEventCollector::UIEventCollector(UInput& uinput, uint32_t device_id, int type,
+                                   int code)
+    : m_uinput(uinput), m_device_id(device_id), m_type(type), m_code(code) {
   assert(m_code != -1);
 }
 
-UIEventCollector::~UIEventCollector()
-{
-}
+UIEventCollector::~UIEventCollector() {}
 
 /* EOF */

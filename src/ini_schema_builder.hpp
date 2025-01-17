@@ -19,23 +19,24 @@
 #ifndef HEADER_XBOXDRV_INI_SCHEMA_BUILDER_HPP
 #define HEADER_XBOXDRV_INI_SCHEMA_BUILDER_HPP
 
+#include <string>
+
 #include "ini_builder.hpp"
 
 class INISchema;
 
-class INISchemaBuilder : public INIBuilder
-{
-private:
+class INISchemaBuilder : public INIBuilder {
+ private:
   const INISchema& m_schema;
   std::string m_current_section;
 
-public:
+ public:
   INISchemaBuilder(const INISchema& schema);
 
   void send_section(const std::string& section);
   void send_pair(const std::string& name, const std::string& value);
 
-private:
+ private:
   INISchemaBuilder(const INISchemaBuilder&);
   INISchemaBuilder& operator=(const INISchemaBuilder&);
 };

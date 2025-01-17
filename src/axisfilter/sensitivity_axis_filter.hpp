@@ -19,20 +19,21 @@
 #ifndef HEADER_XBOXDRV_AXISFILTER_SENSITIVITY_AXIS_FILTER_HPP
 #define HEADER_XBOXDRV_AXISFILTER_SENSITIVITY_AXIS_FILTER_HPP
 
+#include <string>
+
 #include "axis_filter.hpp"
 
-class SensitivityAxisFilter : public AxisFilter
-{
-public:
+class SensitivityAxisFilter : public AxisFilter {
+ public:
   static SensitivityAxisFilter* from_string(const std::string& str);
 
-public:
+ public:
   SensitivityAxisFilter(float sensitivity);
 
   int filter(int value, int min, int max);
   std::string str() const;
 
-private:
+ private:
   float m_sensitivity;
 };
 

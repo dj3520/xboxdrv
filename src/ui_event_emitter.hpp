@@ -19,35 +19,31 @@
 #ifndef HEADER_XBOXDRV_UI_EVENT_EMITTER_HPP
 #define HEADER_XBOXDRV_UI_EVENT_EMITTER_HPP
 
-#include <boost/shared_ptr.hpp>
-#include <stdint.h>
+#include <cstdint>
+#include <memory>
 
 class UInput;
 class UIEventEmitter;
 class UIEventCollector;
 
-typedef boost::shared_ptr<UIEventEmitter> UIEventEmitterPtr;
+typedef std::shared_ptr<UIEventEmitter> UIEventEmitterPtr;
 
-class UIEventEmitter
-{
-public:
+class UIEventEmitter {
+ public:
   UIEventEmitter() {}
   virtual ~UIEventEmitter() {}
 
   virtual void send(int value) = 0;
 
-private:
+ private:
   UIEventEmitter(const UIEventEmitter&);
   UIEventEmitter& operator=(const UIEventEmitter&);
 };
 
-class UIRelEmitter
-{
-private:
-
-public:
+class UIRelEmitter {
+ private:
+ public:
   UIRelEmitter();
-
 };
 
 #endif

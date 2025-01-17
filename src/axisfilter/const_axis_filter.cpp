@@ -19,28 +19,19 @@
 #include "axisfilter/const_axis_filter.hpp"
 
 #include <sstream>
+#include <string>
 
 #include "helper.hpp"
 
-ConstAxisFilter*
-ConstAxisFilter::from_string(const std::string& rest)
-{
-  return new ConstAxisFilter(str2int(rest));
+ConstAxisFilter* ConstAxisFilter::from_string(const std::string& rest) {
+  return new ConstAxisFilter(std::stoi(rest));
 }
 
-ConstAxisFilter::ConstAxisFilter(int value) :
-  m_value(value)
-{}
+ConstAxisFilter::ConstAxisFilter(int value) : m_value(value) {}
 
-int
-ConstAxisFilter::filter(int value, int min, int max)
-{
-  return m_value;
-}
+int ConstAxisFilter::filter(int value, int min, int max) { return m_value; }
 
-std::string
-ConstAxisFilter::str() const
-{
+std::string ConstAxisFilter::str() const {
   std::ostringstream os;
   os << "const:" << m_value;
   return os.str();

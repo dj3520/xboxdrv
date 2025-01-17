@@ -19,44 +19,43 @@
 #ifndef HEADER_XBOXDRV_CONTROLLER_MATCH_RULE_HPP
 #define HEADER_XBOXDRV_CONTROLLER_MATCH_RULE_HPP
 
-#include <boost/shared_ptr.hpp>
 extern "C" {
 #include <libudev.h>
 }
+
+#include <memory>
 #include <string>
 #include <vector>
 
 struct udev_device;
 class ControllerMatchRule;
-typedef boost::shared_ptr<ControllerMatchRule> ControllerMatchRulePtr;
-
-class ControllerMatchRule
-{
-public:
+typedef std::shared_ptr<ControllerMatchRule> ControllerMatchRulePtr;
+
+class ControllerMatchRule {
+ public:
   static ControllerMatchRulePtr from_string(const std::string& lhs,
                                             const std::string& rhs);
 
-public:
+ public:
   ControllerMatchRule() {}
   virtual ~ControllerMatchRule() {}
 
-  virtual bool match(udev_device* device) const =0;
+  virtual bool match(udev_device* device) const = 0;
 };
-
-class ControllerMatchRuleGroup : public ControllerMatchRule
-{
-private:
+
+class ControllerMatchRuleGroup : public ControllerMatchRule {
+ private:
   typedef std::vector<ControllerMatchRulePtr> Rules;
   Rules m_rules;
 
-public:
+ public:
   ControllerMatchRuleGroup();
 
   void add_rule(ControllerMatchRulePtr rule);
   void add_rule_from_string(const std::string& lhs, const std::string& rhs);
   bool match(udev_device* device) const;
 };
-
+
 #endif
 
 /* EOF */

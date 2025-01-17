@@ -19,31 +19,30 @@
 #ifndef HEADER_XBOXDRV_CONTROLLER_OPTIONS_HPP
 #define HEADER_XBOXDRV_CONTROLLER_OPTIONS_HPP
 
-#include <vector>
 #include <map>
-
-#include "uinput_options.hpp"
+#include <memory>
+#include <vector>
 
 #include "modifier/axismap_modifier.hpp"
 #include "modifier/buttonmap_modifier.hpp"
+#include "uinput_options.hpp"
 
-class ControllerOptions
-{
-public:
+class ControllerOptions {
+ public:
   ControllerOptions();
 
   UInputOptions uinput;
   std::vector<ModifierPtr> modifier;
 
   // everything below gets later converted into modifier
-  boost::shared_ptr<ButtonmapModifier> buttonmap;
-  boost::shared_ptr<AxismapModifier>   axismap;
+  std::shared_ptr<ButtonmapModifier> buttonmap;
+  std::shared_ptr<AxismapModifier> axismap;
 
-  int  deadzone;
-  int  deadzone_trigger;
+  int deadzone;
+  int deadzone_trigger;
   bool square_axis;
   bool four_way_restrictor;
-  int  dpad_rotation;
+  int dpad_rotation;
 
   std::map<XboxAxis, AxisFilterPtr> calibration_map;
   std::map<XboxAxis, AxisFilterPtr> sensitivity_map;

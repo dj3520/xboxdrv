@@ -19,20 +19,21 @@
 #ifndef HEADER_XBOXDRV_AXISFILTER_DEADZONE_AXIS_FILTER_HPP
 #define HEADER_XBOXDRV_AXISFILTER_DEADZONE_AXIS_FILTER_HPP
 
+#include <string>
+
 #include "axis_filter.hpp"
 
-class DeadzoneAxisFilter : public AxisFilter
-{
-public:
+class DeadzoneAxisFilter : public AxisFilter {
+ public:
   static DeadzoneAxisFilter* from_string(const std::string& str);
 
-public:
+ public:
   DeadzoneAxisFilter(int min_deadzone, int max_deathzone, bool smooth);
 
   int filter(int value, int min, int max);
   std::string str() const;
 
-private:
+ private:
   int m_min_deadzone;
   int m_max_deadzone;
   bool m_smooth;

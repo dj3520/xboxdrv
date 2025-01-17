@@ -19,20 +19,19 @@
 #ifndef HEADER_XBOXDRV_AXIS_FILTER_HPP
 #define HEADER_XBOXDRV_AXIS_FILTER_HPP
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <string>
 #include <vector>
 
 class AxisFilter;
 
-typedef boost::shared_ptr<AxisFilter> AxisFilterPtr;
-
-class AxisFilter
-{
-public:
+typedef std::shared_ptr<AxisFilter> AxisFilterPtr;
+
+class AxisFilter {
+ public:
   static AxisFilterPtr from_string(const std::string& str);
 
-public:
+ public:
   AxisFilter() {}
   virtual ~AxisFilter() {}
 
@@ -40,7 +39,7 @@ public:
   virtual int filter(int value, int min, int max) = 0;
   virtual std::string str() const = 0;
 };
-
+
 #endif
 
 /* EOF */

@@ -19,20 +19,21 @@
 #ifndef HEADER_XBOXDRV_AXISFILTER_RESPONSE_CURVE_AXIS_FILTER_HPP
 #define HEADER_XBOXDRV_AXISFILTER_RESPONSE_CURVE_AXIS_FILTER_HPP
 
+#include <string>
+
 #include "axis_filter.hpp"
 
-class ResponseCurveAxisFilter : public AxisFilter
-{
-public:
+class ResponseCurveAxisFilter : public AxisFilter {
+ public:
   static ResponseCurveAxisFilter* from_string(const std::string& str);
 
-public:
+ public:
   ResponseCurveAxisFilter(const std::vector<int>& samples);
 
   int filter(int value, int min, int max);
   std::string str() const;
 
-private:
+ private:
   std::vector<int> m_samples;
 };
 

@@ -19,21 +19,22 @@
 #ifndef HEADER_XBOXDRV_AXISFILTER_RELATIVE_AXIS_FILTER_HPP
 #define HEADER_XBOXDRV_AXISFILTER_RELATIVE_AXIS_FILTER_HPP
 
+#include <string>
+
 #include "axis_filter.hpp"
 
-class RelativeAxisFilter : public AxisFilter
-{
-public:
+class RelativeAxisFilter : public AxisFilter {
+ public:
   static RelativeAxisFilter* from_string(const std::string& str);
 
-public:
+ public:
   RelativeAxisFilter(int speed);
 
   void update(int msec_delta);
   int filter(int value, int min, int max);
   std::string str() const;
 
-private:
+ private:
   int m_speed;
 
   float m_float_speed;

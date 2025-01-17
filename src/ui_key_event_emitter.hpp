@@ -19,27 +19,28 @@
 #ifndef HEADER_XBOXDRV_UI_KEY_EVENT_EMITTER_HPP
 #define HEADER_XBOXDRV_UI_KEY_EVENT_EMITTER_HPP
 
+#include <memory>
+
 #include "ui_event_emitter.hpp"
 
 class UIKeyEventCollector;
 
-class UIKeyEventEmitter : public UIEventEmitter
-{
-private:
+class UIKeyEventEmitter : public UIEventEmitter {
+ private:
   UIKeyEventCollector& m_collector;
   bool m_value;
 
-public:
+ public:
   UIKeyEventEmitter(UIKeyEventCollector& collector);
 
   void send(int value);
 
-private:
+ private:
   UIKeyEventEmitter(const UIKeyEventEmitter&);
   UIKeyEventEmitter& operator=(const UIKeyEventEmitter&);
 };
 
-typedef boost::shared_ptr<UIKeyEventEmitter> UIKeyEventEmitterPtr;
+typedef std::shared_ptr<UIKeyEventEmitter> UIKeyEventEmitterPtr;
 
 #endif
 

@@ -18,19 +18,14 @@
 
 #include "buttonfilter/toggle_button_filter.hpp"
 
-ToggleButtonFilter::ToggleButtonFilter() :
-  m_state(false),
-  m_last_value(false)
-{
-}
+#include <string>
 
-bool
-ToggleButtonFilter::filter(bool value)
-{
-  if (value != m_last_value)
-  {
-    if (value)
-    {
+ToggleButtonFilter::ToggleButtonFilter()
+    : m_state(false), m_last_value(false) {}
+
+bool ToggleButtonFilter::filter(bool value) {
+  if (value != m_last_value) {
+    if (value) {
       m_state = !m_state;
     }
 
@@ -39,10 +34,6 @@ ToggleButtonFilter::filter(bool value)
   return m_state;
 }
 
-std::string
-ToggleButtonFilter::str() const
-{
-  return "toggle";
-}
+std::string ToggleButtonFilter::str() const { return "toggle"; }
 
 /* EOF */

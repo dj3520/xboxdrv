@@ -19,23 +19,23 @@
 #ifndef HEADER_XBOXDRV_MODIFIER_SQUARE_AXIS_MODIFIER_HPP
 #define HEADER_XBOXDRV_MODIFIER_SQUARE_AXIS_MODIFIER_HPP
 
+#include <string>
 #include <vector>
 
 #include "modifier.hpp"
 
-class SquareAxisModifier : public Modifier
-{
-public:
+class SquareAxisModifier : public Modifier {
+ public:
   static SquareAxisModifier* from_string(const std::vector<std::string>& args);
 
-public:
+ public:
   SquareAxisModifier(XboxAxis x_axis, XboxAxis y_axis);
 
   void update(int msec_delta, XboxGenericMsg& msg);
 
   std::string str() const;
 
-private:
+ private:
   XboxAxis m_xaxis;
   XboxAxis m_yaxis;
 };

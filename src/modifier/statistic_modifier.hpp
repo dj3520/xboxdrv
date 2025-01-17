@@ -19,16 +19,16 @@
 #ifndef HEADER_XBOXDRV_MODIFIER_STATISTIC_MODIFIER_HPP
 #define HEADER_XBOXDRV_MODIFIER_STATISTIC_MODIFIER_HPP
 
+#include <string>
 #include <vector>
 
 #include "modifier.hpp"
 
-class StatisticModifier : public Modifier
-{
-public:
+class StatisticModifier : public Modifier {
+ public:
   static StatisticModifier* from_string(const std::vector<std::string>& args);
 
-public:
+ public:
   StatisticModifier();
   ~StatisticModifier();
 
@@ -36,11 +36,11 @@ public:
   void print_stats();
   std::string str() const;
 
-private:
+ private:
   std::vector<int> m_button_state;
   std::vector<int> m_press_count;
 
-private:
+ private:
   StatisticModifier(const StatisticModifier&);
   StatisticModifier& operator=(const StatisticModifier&);
 };

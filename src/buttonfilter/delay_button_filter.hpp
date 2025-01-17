@@ -19,17 +19,16 @@
 #ifndef HEADER_XBOXDRV_BUTTONFILTER_DELAY_BUTTON_FILTER_HPP
 #define HEADER_XBOXDRV_BUTTONFILTER_DELAY_BUTTON_FILTER_HPP
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <string>
 
 #include "button_filter.hpp"
 
-class DelayButtonFilter : public ButtonFilter
-{
-public:
+class DelayButtonFilter : public ButtonFilter {
+ public:
   static DelayButtonFilter* from_string(const std::string& str);
 
-public:
+ public:
   DelayButtonFilter(int delay);
 
   bool filter(bool value);
@@ -37,7 +36,7 @@ public:
 
   std::string str() const;
 
-private:
+ private:
   int m_delay;
   int m_time;
 };

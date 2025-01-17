@@ -19,20 +19,21 @@
 #ifndef HEADER_XBOXDRV_BUTTONFILTER_LOG_BUTTON_FILTER_HPP
 #define HEADER_XBOXDRV_BUTTONFILTER_LOG_BUTTON_FILTER_HPP
 
+#include <string>
+
 #include "button_filter.hpp"
 
-class LogButtonFilter : public ButtonFilter
-{
-public:
+class LogButtonFilter : public ButtonFilter {
+ public:
   static LogButtonFilter* from_string(const std::string& str);
 
-public:
+ public:
   LogButtonFilter(const std::string& name);
 
   bool filter(bool value);
   std::string str() const;
 
-private:
+ private:
   std::string m_name;
 };
 

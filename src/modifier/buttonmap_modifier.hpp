@@ -19,29 +19,25 @@
 #ifndef HEADER_XBOXDRV_MODIFIER_BUTTON_MAP_MODIFIER_HPP
 #define HEADER_XBOXDRV_MODIFIER_BUTTON_MAP_MODIFIER_HPP
 
+#include <string>
 #include <vector>
 
 #include "button_filter.hpp"
 #include "modifier.hpp"
-
-struct ButtonMapping
-{
-  static ButtonMapping from_string(const std::string& lhs, const std::string& rhs);
+
+struct ButtonMapping {
+  static ButtonMapping from_string(const std::string& lhs,
+                                   const std::string& rhs);
 
   XboxButton lhs;
   XboxButton rhs;
   std::vector<ButtonFilterPtr> filters;
 
-  ButtonMapping() :
-    lhs(XBOX_BTN_UNKNOWN),
-    rhs(XBOX_BTN_UNKNOWN),
-    filters()
-  {}
+  ButtonMapping() : lhs(XBOX_BTN_UNKNOWN), rhs(XBOX_BTN_UNKNOWN), filters() {}
 };
-
-class ButtonmapModifier : public Modifier
-{
-public:
+
+class ButtonmapModifier : public Modifier {
+ public:
   ButtonmapModifier();
 
   void update(int msec_delta, XboxGenericMsg& msg);
@@ -53,10 +49,10 @@ public:
 
   bool empty() const { return m_buttonmap.empty(); }
 
-public:
+ public:
   std::vector<ButtonMapping> m_buttonmap;
 };
-
+
 #endif
 
 /* EOF */

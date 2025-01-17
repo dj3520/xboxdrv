@@ -18,91 +18,73 @@
 
 #include "axisfilter/deadzone_axis_filter.hpp"
 
-#include <boost/tokenizer.hpp>
 #include <sstream>
+#include <stdexcept>
 
 #include "helper.hpp"
 
-DeadzoneAxisFilter*
-DeadzoneAxisFilter::from_string(const std::string& str)
-{
-  int  min_deadzone = 0;
-  int  max_deadzone = 0;
-  bool smooth   = true;
+DeadzoneAxisFilter* DeadzoneAxisFilter::from_string(const std::string& str) {
+  int min_deadzone = 0;
+  int max_deadzone = 0;
+  bool smooth = true;
 
-  typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
-  tokenizer tokens(str, boost::char_separator<char>(":", "", boost::keep_empty_tokens));
+  std::vector<std::string> tokens = string_split(str, ":");
   int idx = 0;
-  for(tokenizer::iterator t = tokens.begin(); t != tokens.end(); ++t, ++idx)
-  {
-    switch(idx)
-    {
+  for (auto& t : tokens) {
+    switch (idx) {
       case 0:
-        max_deadzone = str2int(*t);
+        max_deadzone = std::stoi(t);
         min_deadzone = -max_deadzone;
         break;
 
       case 1:
         min_deadzone = -min_deadzone;
-        max_deadzone = str2int(*t);
+        max_deadzone = std::stoi(t);
         break;
 
       case 2:
-        smooth = str2bool(*t);
+        smooth = str2bool(t);
         break;
 
       default:
         throw std::runtime_error("to many arguments");
         break;
     }
+    ++idx;
   }
 
   return new DeadzoneAxisFilter(min_deadzone, max_deadzone, smooth);
 }
 
-DeadzoneAxisFilter::DeadzoneAxisFilter(int min_deadzone, int max_deadzone, bool smooth) :
-  m_min_deadzone(min_deadzone),
-  m_max_deadzone(max_deadzone),
-  m_smooth(smooth)
-{
-}
+DeadzoneAxisFilter::DeadzoneAxisFilter(int min_deadzone, int max_deadzone,
+                                       bool smooth)
+    : m_min_deadzone(min_deadzone),
+      m_max_deadzone(max_deadzone),
+      m_smooth(smooth) {}
 
-int
-DeadzoneAxisFilter::filter(int value, int min, int max)
-{
-  if (!m_smooth)
-  {
-    if (value < m_min_deadzone || m_max_deadzone < value)
-    {
+int DeadzoneAxisFilter::filter(int value, int min, int max) {
+  if (!m_smooth) {
+    if (value < m_min_deadzone || m_max_deadzone < value) {
       return value;
-    }
-    else
-    {
+    } else {
       return 0;
     }
-  }
-  else // (m_smooth)
+  } else  // (m_smooth)
   {
-    if (value < m_min_deadzone)
-    {
+    if (value < m_min_deadzone) {
       return min * (value - m_min_deadzone) / (min - m_min_deadzone);
-    }
-    else if (value > m_max_deadzone)
-    {
+    } else if (value > m_max_deadzone) {
       return max * (value - m_max_deadzone) / (max - m_max_deadzone);
-    }
-    else
-    {
+    } else {
       return 0;
     }
   }
 }
 
-std::string
-DeadzoneAxisFilter::str() const
-{
+std::string DeadzoneAxisFilter::str() const {
   std::ostringstream out;
-  out << "deadzone:" << m_min_deadzone << ":" << m_max_deadzone << ":" << m_smooth;
+  out << "deadzone:" << m_min_deadzone << ":" << m_max_deadzone << ":"
+      << m_smooth;
   return out.str();
 }
 

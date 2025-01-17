@@ -19,23 +19,22 @@
 #ifndef HEADER_XBOXDRV_BUTTON_FILTER_HPP
 #define HEADER_XBOXDRV_BUTTON_FILTER_HPP
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <string>
 
 class ButtonFilter;
 
-typedef boost::shared_ptr<ButtonFilter> ButtonFilterPtr;
+typedef std::shared_ptr<ButtonFilter> ButtonFilterPtr;
 
-class ButtonFilter
-{
-public:
+class ButtonFilter {
+ public:
   static ButtonFilterPtr from_string(const std::string& str);
 
-public:
+ public:
   ButtonFilter() {}
   virtual ~ButtonFilter() {}
 
-  virtual bool filter(bool value) =0;
+  virtual bool filter(bool value) = 0;
   virtual void update(int msec_delta) {}
   virtual std::string str() const = 0;
 };

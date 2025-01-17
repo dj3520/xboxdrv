@@ -18,46 +18,45 @@
 
 #include "axisfilter/calibration_axis_filter.hpp"
 
-#include <boost/tokenizer.hpp>
+#include <algorithm>
 #include <sstream>
+#include <stdexcept>
 
 #include "helper.hpp"
 
-CalibrationAxisFilter*
-CalibrationAxisFilter::from_string(const std::string& str)
-{
-  typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
-  tokenizer tokens(str, boost::char_separator<char>(":", "", boost::keep_empty_tokens));
+CalibrationAxisFilter* CalibrationAxisFilter::from_string(
+    const std::string& str) {
+  std::vector<std::string> tokens = string_split(str, ":");
 
-  int min    = 0;
+  int min = 0;
   int center = 0;
-  int max    = 0;
+  int max = 0;
 
-  int j = 0;
-  for(tokenizer::iterator i = tokens.begin(); i != tokens.end(); ++i, ++j)
-  {
-    switch(j)
-    {
-      case 0: min    = str2int(*i); break;
-      case 1: center = str2int(*i); break;
-      case 2: max    = str2int(*i); break;
-      default: throw std::runtime_error("to many arguments");
-    };
+  int idx = 0;
+  for (auto& i : tokens) {
+    switch (idx) {
+      case 0:
+        min = std::stoi(i);
+        break;
+      case 1:
+        center = std::stoi(i);
+        break;
+      case 2:
+        max = std::stoi(i);
+        break;
+      default:
+        throw std::runtime_error("to many arguments");
+    }
+    ++idx;
   }
 
   return new CalibrationAxisFilter(min, center, max);
 }
 
-CalibrationAxisFilter::CalibrationAxisFilter(int min, int center, int max) :
-  m_min(min),
-  m_center(center),
-  m_max(max)
-{
-}
+CalibrationAxisFilter::CalibrationAxisFilter(int min, int center, int max)
+    : m_min(min), m_center(center), m_max(max) {}
 
-int
-CalibrationAxisFilter::filter(int value, int min, int max)
-{
+int CalibrationAxisFilter::filter(int value, int min, int max) {
   if (value < m_center)
     value = -min * (value - m_center) / (m_center - m_min);
   else if (value > m_center)
@@ -65,12 +64,10 @@ CalibrationAxisFilter::filter(int value, int min, int max)
   else
     value = 0;
 
-  return Math::clamp(min, value, max);
+  return std::clamp(value, min, max);
 }
 
-std::string
-CalibrationAxisFilter::str() const
-{
+std::string CalibrationAxisFilter::str() const {
   std::ostringstream out;
   out << "calibration:" << m_min << ":" << m_center << ":" << m_max;
   return out.str();

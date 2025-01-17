@@ -19,27 +19,28 @@
 #ifndef HEADER_XBOXDRV_UI_ABS_EVENT_EMITTER_HPP
 #define HEADER_XBOXDRV_UI_ABS_EVENT_EMITTER_HPP
 
+#include <memory>
+
 #include "ui_event_emitter.hpp"
 
 class UIAbsEventCollector;
 
-class UIAbsEventEmitter : public UIEventEmitter
-{
-private:
+class UIAbsEventEmitter : public UIEventEmitter {
+ private:
   UIAbsEventCollector& m_collector;
   int m_value;
 
-public:
+ public:
   UIAbsEventEmitter(UIAbsEventCollector& collector);
 
   void send(int value);
 
-private:
+ private:
   UIAbsEventEmitter(const UIAbsEventEmitter&);
   UIAbsEventEmitter& operator=(const UIAbsEventEmitter&);
 };
 
-typedef boost::shared_ptr<UIAbsEventEmitter> UIAbsEventEmitterPtr;
+typedef std::shared_ptr<UIAbsEventEmitter> UIAbsEventEmitterPtr;
 
 #endif
 

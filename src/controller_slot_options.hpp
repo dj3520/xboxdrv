@@ -20,17 +20,17 @@
 #define HEADER_XBOXDRV_CONTROLLER_SLOT_OPTIONS_HPP
 
 #include <map>
+#include <string>
 #include <vector>
 
-#include "controller_options.hpp"
 #include "controller_match_rule.hpp"
+#include "controller_options.hpp"
 
-class ControllerSlotOptions
-{
-public:
+class ControllerSlotOptions {
+ public:
   typedef std::map<int, ControllerOptions> Options;
 
-public:
+ public:
   ControllerSlotOptions();
 
   void add_match_rule(ControllerMatchRulePtr rule);
@@ -45,17 +45,21 @@ public:
   bool get_force_feedback() const { return m_force_feedback; }
 
   void set_ff_device(const std::string& device);
-  int  get_ff_device() const;
+  int get_ff_device() const;
+
+  void set_rumble_gain(int gain);
+  int get_rumble_gain() const;
 
   int get_led_status() const { return m_led_status; }
-  void set_led_status(int v)  { m_led_status = v; }
+  void set_led_status(int v) { m_led_status = v; }
 
-private:
+ private:
   std::map<int, ControllerOptions> m_options;
   std::vector<ControllerMatchRulePtr> m_match_rules;
   bool m_force_feedback;
   int m_led_status;
   int m_ff_device;
+  int m_rumble_gain;
 };
 
 #endif

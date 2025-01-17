@@ -22,7 +22,6 @@
              ((guix licenses) #:prefix license:)
              (guix packages)
              (guix utils)
-             (gnu packages boost)
              (gnu packages glib)
              (gnu packages libusb)
              (gnu packages linux)
@@ -63,8 +62,7 @@
     `(("pkg-config" ,pkg-config)
       ("glib" ,glib "bin")))
    (inputs
-    `(("boost" ,boost)
-      ("dbus-glib" ,dbus-glib)
+    `(("dbus-glib" ,dbus-glib)
       ("libusb" ,libusb)
       ("libudev" ,eudev)
       ("libx11" ,libx11)
@@ -77,7 +75,6 @@ driver and has support for Xbox1 gamepads, Xbox360 USB gamepads and
 Xbox360 wireless gamepads. The Xbox360 guitar and some Xbox1 dancemats
 might work too. The Xbox 360 racing wheel is not supported, but
 shouldn't be to hard to add if somebody is interested.")
-   (home-page "https://gitlab.com/xboxdrv/xboxdrv/")
    (license license:gpl3+)))
 
 xboxdrv

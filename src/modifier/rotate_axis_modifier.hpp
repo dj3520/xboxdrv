@@ -19,22 +19,22 @@
 #ifndef HEADER_XBOXDRV_MODIFIER_ROTATE_AXIS_MODIFIER_HPP
 #define HEADER_XBOXDRV_MODIFIER_ROTATE_AXIS_MODIFIER_HPP
 
+#include <string>
 #include <vector>
 
 #include "modifier.hpp"
 
-class RotateAxisModifier : public Modifier
-{
-public:
+class RotateAxisModifier : public Modifier {
+ public:
   static RotateAxisModifier* from_string(const std::vector<std::string>& args);
 
-public:
+ public:
   RotateAxisModifier(XboxAxis xaxis, XboxAxis yaxis, float angle, bool mirror);
 
   void update(int msec_delta, XboxGenericMsg& msg);
   std::string str() const;
 
-private:
+ private:
   XboxAxis m_xaxis;
   XboxAxis m_yaxis;
   float m_angle;
